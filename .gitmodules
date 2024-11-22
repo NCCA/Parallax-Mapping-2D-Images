@@ -1,0 +1,21 @@
+[submodule "ml-depth-pro"]
+	path = ml-depth-pro
+	url = https://github.com/apple/ml-depth-pro
+[submodule "Depth-Anything-V2"]
+	path = Depth-Anything-V2
+	url = https://github.com/DepthAnything/Depth-Anything-V2
+[submodule "DepthCrafter"]
+	path = DepthCrafter
+	url = https://github.com/Tencent/DepthCrafter
+[submodule "MiDaS"]
+	path = MiDaS
+	url = https://github.com/isl-org/MiDaS
+[submodule "Marigold"]
+	path = Marigold
+	url = https://github.com/prs-eth/Marigold
+[submodule "DSINE"]
+	path = DSINE
+	url = https://github.com/baegwangbin/DSINE
+[submodule "IronDepth"]
+	path = IronDepth
+	url = https://github.com/baegwangbin/IronDepth
