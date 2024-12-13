@@ -5,7 +5,7 @@ import matplotlib
 import numpy as np
 import os
 import torch
-
+import json
 from depth_anything_v2.dpt import DepthAnythingV2
 
 
@@ -35,7 +35,8 @@ if __name__ == '__main__':
     depth_anything = DepthAnythingV2(**model_configs[args.encoder])
     depth_anything.load_state_dict(torch.load(f'checkpoints/depth_anything_v2_{args.encoder}.pth', map_location='cpu'))
     depth_anything = depth_anything.to(DEVICE).eval()
-    
+
+
     if os.path.isfile(args.img_path):
         if args.img_path.endswith('txt'):
             with open(args.img_path, 'r') as f:
@@ -58,6 +59,16 @@ if __name__ == '__main__':
         
         depth = (depth - depth.min()) / (depth.max() - depth.min()) * 255.0
         depth = depth.astype(np.uint8)
+        
+        #Exporting as .npy file
+        np.save(os.path.join(args.outdir, os.path.splitext(os.path.basename(filename))[0] + '.npy'), depth)
+
+        #Exporting as .json file
+        arr_list = depth.tolist()
+        jfile = os.path.join(args.outdir, os.path.splitext(os.path.basename(filename))[0] + '.json')
+        with open(jfile, 'w') as json_file:
+            
+            json.dump(arr_list, json_file)
         
         if args.grayscale:
             depth = np.repeat(depth[..., np.newaxis], 3, axis=-1)
