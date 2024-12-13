@@ -17,6 +17,7 @@ from utils.projection import intrins_from_fov, intrins_from_txt
 if __name__ == '__main__':
     device = torch.device('cuda')
     args = config.get_args(test=True)
+    print(args.ckpt_path)
     assert os.path.exists(args.ckpt_path)
 
     if args.NNET_architecture == 'v00':
@@ -78,3 +79,5 @@ if __name__ == '__main__':
             pred_norm = (((pred_norm + 1) * 0.5) * 255).astype(np.uint8)
             im = Image.fromarray(pred_norm[0,...])
             im.save(target_path)
+            numpy_path = target_path.replace('.png', '.npy')
+            np.save(numpy_path, pred_norm)

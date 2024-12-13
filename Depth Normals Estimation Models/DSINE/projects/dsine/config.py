@@ -44,6 +44,7 @@ def get_args(test=False):
 
     #↓↓↓↓
     #NOTE: update args
+    EXPERIMENT_DIR = ('')
     args.exp_root = os.path.join(EXPERIMENT_DIR, 'dsine')
     args.load_normal = True
     args.load_intrins = True
@@ -51,6 +52,8 @@ def get_args(test=False):
 
     # set working dir
     exp_dir = os.path.join(args.exp_root, args.exp_name)
+    print('exp_dir:', exp_dir)
+
     os.makedirs(exp_dir, exist_ok=True)
 
     args.output_dir = os.path.join(exp_dir, args.exp_id)
