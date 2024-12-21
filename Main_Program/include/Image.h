@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "ImageData.h"
 
 
 class Image
@@ -13,17 +14,16 @@ class Image
         Image();
         Image(std::string );
         ~Image();
-        void set_path(std::string);
-        std::string get_path();
-        std::vector<std::vector<float>> get_depth_map();
         void readDepthMap();
+        void readDepthNormals();
+        void readImageIntrinsic();
         void displayImage(char* path);
         void displayDepthMap();
-
+        void displayDepthNormals();
     private:
-        std::string path;
-        std::vector<std::vector<float>> depth_map;
+        ImageData inp_image;
         cv::Mat depth_normalized;
+        cv::Mat normals_normalized;
 
 
 };
