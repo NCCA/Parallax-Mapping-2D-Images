@@ -5,25 +5,24 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unordered_map>
 #include "ImageData.h"
 
 
 class Image
 {
     public:
-        Image();
-        Image(std::string );
-        ~Image();
-        void readDepthMap();
-        void readDepthNormals();
-        void readImageIntrinsic();
-        void displayImage(char* path);
-        void displayDepthMap();
-        void displayDepthNormals();
-    private:
         ImageData inp_image;
-        cv::Mat depth_normalized;
-        cv::Mat normals_normalized;
+        Image();
+        Image(std::string , std::string , std::string , std::string , std::string , std::string );
+        void setPaths(std::string , std::string , std::string , std::string , std::string , std::string );
+        ~Image();
+        void readImageData(std::string);
+
+
+        unsigned char * image_data ;
+        int width, height, channels;
+        std::unordered_map <std::string, int> types;
 
 
 };

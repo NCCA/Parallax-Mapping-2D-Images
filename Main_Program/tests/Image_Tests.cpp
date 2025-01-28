@@ -4,9 +4,13 @@
 #include "GLWindow.h"
 #include <string>
 #include <fstream>
+#include <windows.h>
+
+
+// I prefered using GTests for my base classes
+// The GLWindow class I chose to put error checks in functions and also using OpenGL debugging callback
 
 // ImageData Class constructor
-
 TEST(ImageData,ctor)
 {
     std::string path = "";
@@ -17,39 +21,66 @@ TEST(ImageData,ctor)
 // ImageData Class parameter constructor
 TEST(ImageData,param_ctor)
 {
-    std::string path = "input.json";
-    ImageData inp(path);
+    std::string path = "image.png";
+    std::string depth_map = "depth_map.png";
+    std::string depth_normals = "depth_normals.png";
+    std::string albedo = "test_albedo.png";
+    std::string residuals = "test_residuals.png";
+    std::string diffuse_shading = "test_diffuse_shading.png";
+
+    ImageData inp(path,depth_map,depth_normals,albedo,residuals,diffuse_shading);
+    Intrinsic intrinsic = inp.get_Image_Intrinsic();
+
     ASSERT_STREQ(inp.get_path().c_str(), path.c_str());
+    ASSERT_STREQ(inp.get_depth_map().c_str(), depth_map.c_str());
+    ASSERT_STREQ(inp.get_depth_normals().c_str(), depth_normals.c_str());
+    ASSERT_STREQ(intrinsic.A.c_str(), albedo.c_str());
+    ASSERT_STREQ(intrinsic.R.c_str(), residuals.c_str());
+    ASSERT_STREQ(intrinsic.D.c_str(), diffuse_shading.c_str());
 }
 
-// ImageData Class setting path and getting path
+// // ImageData Class setting path and getting path
 TEST(ImageData,correct_path)
 {
-    std::string json_file = "test_path.json";
+    std::string file = "test_path.png";
     ImageData inp;
-    inp.set_path(json_file);
-    ASSERT_STREQ(inp.get_path().c_str(), json_file.c_str());
+    inp.set_path(file);
+    ASSERT_STREQ(inp.get_path().c_str(), file.c_str());
    
 }
 
 
 TEST(ImageData,setting_depth)
 {
-    std::string json_file = "test_path.json";
+    std::string file = "test_path.png";
     ImageData inp;
-    inp.set_path(json_file);
-    ASSERT_STREQ(inp.get_path().c_str(), json_file.c_str());
+    inp.set_depth_map(file);
+    ASSERT_STREQ(inp.get_depth_map().c_str(), file.c_str());
    
 }
 
-TEST(ImageData,correct_path)
+TEST(ImageData,setting_depth_normals)
 {
-    std::string json_file = "test_path.json";
+    std::string file = "test_path.png";
     ImageData inp;
-    inp.set_path(json_file);
-    ASSERT_STREQ(inp.get_path().c_str(), json_file.c_str());
+    inp.set_depth_normals(file);
+    ASSERT_STREQ(inp.get_depth_normals().c_str(), file.c_str());
    
 }
+
+TEST(ImageData,setting_Image_Intrinsic)
+{
+    std::string albedo = "test_albedo.png";
+    std::string residuals = "test_residuals.png";
+    std::string diffuse_shading = "test_diffuse_shading.png";
+    ImageData inp;
+    inp.set_Image_Intrinsic(albedo, residuals, diffuse_shading);
+    Intrinsic intrinsic = inp.get_Image_Intrinsic();
+    ASSERT_STREQ(intrinsic.A.c_str(), albedo.c_str());
+    ASSERT_STREQ(intrinsic.R.c_str(), residuals.c_str());
+    ASSERT_STREQ(intrinsic.D.c_str(), diffuse_shading.c_str());
+}
+
 
 
 // Image Class constructor
@@ -64,50 +95,25 @@ TEST(Image,ctor)
 // Image Class parameter constructor
 TEST(Image,param_ctor)
 {
-    std::string path = "input.json";
-    Image inp(path);
+    std::string path = "image.png";
+    std::string depth_map = "depth_map.png";
+    std::string depth_normals = "depth_normals.png";
+    std::string albedo = "test_albedo.png";
+    std::string residuals = "test_residuals.png";
+    std::string diffuse_shading = "test_diffuse_shading.png";
+
+    Image inp(path,depth_map,depth_normals,albedo,residuals,diffuse_shading);
+    Intrinsic intrinsic = inp.inp_image.get_Image_Intrinsic();
+
     ASSERT_STREQ(inp.inp_image.get_path().c_str(), path.c_str());
+    ASSERT_STREQ(inp.inp_image.get_depth_map().c_str(), depth_map.c_str());
+    ASSERT_STREQ(inp.inp_image.get_depth_normals().c_str(), depth_normals.c_str());
+    ASSERT_STREQ(intrinsic.A.c_str(), albedo.c_str());
+    ASSERT_STREQ(intrinsic.R.c_str(), residuals.c_str());
+    ASSERT_STREQ(intrinsic.D.c_str(), diffuse_shading.c_str());
 }
 
-TEST(Image,read_depth)
-{
-    std::string json_file = "assets/JSON_files/20241121_111331369_iOS.png";
-    Image inp(json_file);
-    std::ifstream file(json_file);
-    ASSERT_TRUE(file.is_open());
-   
-}
 
-TEST(GLWindow,ctor)
-{
-    std::string title = " ";
-    GLWindow win;
-    ASSERT_EQ(win.getwidth(), 0);
-    ASSERT_EQ(win.getheight(), 0);
-    ASSERT_STREQ(win.gettitle(), title.c_str());
-}
 
-TEST(GLWindow,param_ctor)
-{
-    std::string title = "test window";
-    GLWindow win(600, 400,title.c_str() );
-    ASSERT_EQ(win.getwidth(), 600);
-    ASSERT_EQ(win.getheight(), 400);
-    ASSERT_STREQ(win.gettitle(), title.c_str());
-}
 
-TEST(GLWindow, libs_init)
-{
-    ASSERT_TRUE(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress));
-    ASSERT_TRUE(glfwInit());
-}
-
-TEST(GLWindow, open_window)
-{
-    GLWindow win(600, 400, "test window");
-    GLFWwindow* window = win.getGLWin();
-    window = glfwCreateWindow(win.getwidth(), win.getheight(), win.gettitle(), nullptr, nullptr);
-    ASSERT_TRUE(window);
-    
-}
  
