@@ -7,6 +7,7 @@ This project simulates a parallaz effect (2.5D) on a regular 2D image in an Open
 - [Project Overview](#project-overview)
 - [Usage](#usage)
 - [Pipeline](#pipeline)
+  
 
 
 ## Usage
@@ -17,12 +18,15 @@ It can be used in all sorts of VFX scenes with static images as backdrops such a
 
 1. **Depth Estimation (Python)**:
    - Uses Depth Anythin V2 model to generate depth maps to be used as textures. (https://github.com/DepthAnything/Depth-Anything-V2)
+   - Instructions on how to run is in the notebook file Notebooks/DAV2.ipynb
 
 2. **Surface Normals Estimation (Python)**:
-   - Uses DSINE model to run the estimation on the image. (
+   - Uses DSINE model to run the estimation on the image. (https://github.com/baegwangbin/DSINE)
+   -  Instructions on how to run is in the notebook file Notebooks/DSINE_test.ipynb
 
 3. **Intrinsic Image Decomposition(Python)**:
    - Running ML model to decompose layers of the RGB image to be used for adjusting lighting of the image. (https://github.com/compphoto/Intrinsic)
+   -  Instructions on how to run is in the notebook file Notebooks/Intrinsic_test.ipynb
   
 
 4. **OpenGL Parallax Occlusion(C++)**:
