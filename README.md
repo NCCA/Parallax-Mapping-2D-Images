@@ -1,36 +1,32 @@
-# Depth-Based Pixel Diffraction": Simulating Light Distortion in Video Using Depth Estimation
+# Parallax Mapping 2D Images: Simulating Parallax Effect on Images Using OpenGL
 
 ## Project Overview
-This project simulates a realistic  diffraction effect on video using depth estimation. Using the Depth Estimation model, we generate depth maps from video frames and then apply pixel-based translation to mimic light distortion based on depth.
+This project simulates a parallaz effect (2.5D) on a regular 2D image in an OpenGL scene. The image is passed first to extract depth map, surface normals, and intrinsic decomposition.These maps are used as input textures to the OpenGL scene.
 
 ## Table of Contents
 - [Project Overview](#project-overview)
 - [Usage](#usage)
 - [Pipeline](#pipeline)
-- [TBC Constraints](#tbc-constraints)
+
 
 ## Usage
-This project can be used for multiple applications according to features implemented. Uses include: 
-- Applying underwater effects on videos
-- Can be expanded to include multiple liquids diffraction rates
-- Distorting videos for different glasses POV
-- Applying binoculars or night vision goggles effects on videos
+This project is used to provide a pipeline to have a more accurate backdrops in VFX scenes. 
+It can be used in all sorts of VFX scenes with static images as backdrops such as windows and moving cars.
 
 ## Pipeline
 
 1. **Depth Estimation (Python)**:
-   - Uses Depth Estimation ML model to generate depth maps for each frame in the input video.
+   - Uses Depth Anythin V2 model to generate depth maps to be used as textures. (https://github.com/DepthAnything/Depth-Anything-V2)
 
-2. **Pixel Translation (C++)**:
-   - Applies pixel shifts based on depth values to simulate diffraction.
+2. **Surface Normals Estimation (Python)**:
+   - Uses DSINE model to run the estimation on the image. (
 
-3. **Video Reconstruction (C++)**:
-   - Reassembles frames with the effect applied into a final output video.
+3. **Intrinsic Image Decomposition(Python)**:
+   - Running ML model to decompose layers of the RGB image to be used for adjusting lighting of the image. (https://github.com/compphoto/Intrinsic)
+  
 
-## TBC Constraints
-- The ML model to be used
-- The graphics C++ library
-- The data type that will be exported from  Python to C++
-- The features and applications that will be developed as mention in the [Usage](#usage) section
+4. **OpenGL Parallax Occlusion(C++)**:
+   - Taking the outputs from the ML models as textures, this code creates an OpenGL while simulating parallax mapping (https://github.com/JoeyDeVries/LearnOpenGL/tree/master/src/5.advanced_lighting/5.3.parallax_occlusion_mapping)
+
 
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/RM1pL2Qm)
