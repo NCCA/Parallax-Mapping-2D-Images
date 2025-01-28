@@ -16,7 +16,7 @@ and then use it to install the following libraries
 ## Building the Code
 After cloning the repo and setting up this folder. create a build folder to run cmake
 ```markdown
-    mkdir build
-    cd build
-    cmake ..
-    cmake --build .\ 
+mkdir build
+cd build
+cmake ..
+cmake --build .\ 
